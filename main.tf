@@ -1,12 +1,16 @@
+variable aws_region {}
+variable aws_availability_zone {}
+variable subnet_id {}
+
 provider "aws" {
-  region = "ap-northeast-1"
+  region = var.aws_region
 }
 
 module "dedicated-host" {
   source            = "DanielRDias/dedicated-host/aws"
   version           = "0.3.0"
   instance_type     = "mac1.metal"
-  availability_zone = "ap-northeast-1a"
+  availability_zone = var.aws_availability_zone
 
   tags = {
     Name = "Tadashi Terraform Mac"
@@ -23,7 +27,7 @@ resource "aws_instance" "mac" {
   ami           = data.aws_ami.mac.id
   instance_type = "mac1.metal"
   host_id       = module.dedicated-host.dedicated_hosts["HostID"]
-  subnet_id     = "subnet-3dd47675" # Subnet ID in the same AZ as the dedicated host
+  subnet_id     = var.subnet_id # Subnet ID in the same AZ as the dedicated host
 
   tags = {
     Name = "Tadashi Terraform Mac"

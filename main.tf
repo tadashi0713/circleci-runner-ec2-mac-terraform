@@ -1,8 +1,7 @@
-module "dedicated-host" {
-  source            = "DanielRDias/dedicated-host/aws"
-  version           = "0.3.0"
+resource "aws_ec2_host" "mac" {
   instance_type     = "mac1.metal"
   availability_zone = var.aws_availability_zone
+  auto_placement    = "on"
 
   tags = {
     Name = "Tadashi Terraform Mac"
@@ -10,7 +9,7 @@ module "dedicated-host" {
 }
 
 resource "aws_ec2_tag" "mac" {
-  resource_id = module.dedicated-host.dedicated_hosts["HostID"]
+  resource_id = aws_ec2_host.mac.id
   key         = "Name"
   value       = "Tadashi Terraform Mac"
 }
@@ -18,8 +17,16 @@ resource "aws_ec2_tag" "mac" {
 resource "aws_instance" "mac" {
   ami           = data.aws_ami.mac.id
   instance_type = "mac1.metal"
-  host_id       = module.dedicated-host.dedicated_hosts["HostID"]
+  host_id       = aws_ec2_host.mac.id
   subnet_id     = var.subnet_id # Subnet ID in the same AZ as the dedicated host
+  user_data = base64encode(
+    templatefile(
+      "${path.module}/userdata/runner_install.sh.tpl",
+      {
+        auth_token  = "Hello, this is script"
+      }
+    )
+  )
 
   tags = {
     Name = "Tadashi Terraform Mac"
@@ -47,5 +54,5 @@ output "mac_ami" {
 }
 
 output "dedicated-host" {
-  value = module.dedicated-host.dedicated_hosts["HostID"]
+  value = aws_ec2_host.mac.id
 }

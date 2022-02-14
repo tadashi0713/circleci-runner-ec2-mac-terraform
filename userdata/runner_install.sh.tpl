@@ -1,0 +1,1 @@
+echo "${auth_token}"

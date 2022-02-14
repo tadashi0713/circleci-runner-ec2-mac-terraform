@@ -1,11 +1,3 @@
-variable aws_region {}
-variable aws_availability_zone {}
-variable subnet_id {}
-
-provider "aws" {
-  region = var.aws_region
-}
-
 module "dedicated-host" {
   source            = "DanielRDias/dedicated-host/aws"
   version           = "0.3.0"

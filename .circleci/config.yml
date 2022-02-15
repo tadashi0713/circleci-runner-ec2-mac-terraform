@@ -8,3 +8,12 @@ workflows:
     jobs:
       - terraform/fmt:
           checkout: true
+      - terraform/validate:
+          checkout: true
+          requires:
+            - terraform/fmt
+      - terraform/plan:
+          checkout: true
+          persist-workspace: true
+          requires:
+            - terraform/validate

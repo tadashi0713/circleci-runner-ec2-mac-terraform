@@ -87,18 +87,6 @@ resource "aws_cloudformation_stack" "mac1_host_resource_group" {
 STACK
 }
 
-output host_resource_group_id {
-    value = random_pet.host_resource_group.id
-    description = "To be put into subsequent stack's tfvars"
-}
-
-output "license_manager_arn" {
-    value = aws_licensemanager_license_configuration.license_config.arn
-    description = "To be put into subsequent stack's tfvars"
-}
-
-
-
 // resource "aws_ec2_host" "mac" {
 //   instance_type     = "mac1.metal"
 //   availability_zone = var.aws_availability_zone
@@ -173,7 +161,7 @@ resource "random_string" "str_prefix" {
 }
 
 data "aws_cloudformation_export" "host_resource_group_arn" {
-  name = var.host_resource_group_cfn_stack_name
+  name = random_pet.host_resource_group.id
 }
 
 resource "aws_licensemanager_license_configuration" "mac_workers" {
@@ -307,7 +295,7 @@ resource "aws_launch_template" "mac_workers" {
 
   license_specification {
     # One or more licenses need to be specified for a valid Server Manageability call. Launching EC2 Mac1 requires RG+LM
-    license_configuration_arn = var.license_manager_arn
+    license_configuration_arn = aws_licensemanager_license_configuration.license_config.arn
   }
 
   placement {

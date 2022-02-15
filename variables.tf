@@ -16,8 +16,8 @@ variable "user_data" {
 
 variable "ami_id" {
   description = "SSM Parameter used to lookup the latest EC2 Mac1 AMI"
-  type = string
-  default = "ami-08c245b8fa8669594"
+  type        = string
+  default     = "ami-08c245b8fa8669594"
 }
 
 variable "cf_stack_name" {
@@ -64,14 +64,14 @@ variable "tags" {
 
 variable "management_subnet" {
   description = "Allow access from management subnet"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "vpc_id" {
   description = "VPC Id for LB Target Group"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "subnet_ids" {
@@ -100,6 +100,6 @@ variable "mac_ebs_volume_size" {
 
 variable "key_name" {
   description = "SSH key"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }

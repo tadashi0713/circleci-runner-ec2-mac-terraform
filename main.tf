@@ -4,7 +4,7 @@ resource "random_pet" "host_resource_group" {
   separator = "-"
 }
 
-resource "aws_licensemanager_license_configuration"  "license_config"{  
+resource "aws_licensemanager_license_configuration" "license_config" {
   name                     = "MyRequiredLicense"
   description              = "Pass through configuration for Host Resource Group"
   license_count            = 32
@@ -108,15 +108,15 @@ data "aws_cloudformation_export" "host_resource_group_arn" {
 resource "aws_licensemanager_license_configuration" "mac_workers" {
   name = random_pet.mac_workers.id
 
-  license_count = 1000
+  license_count            = 1000
   license_count_hard_limit = false
   #license_counting_type = "Instance" # This option fails to launch ec2 mac instance onto dedicated host
   license_counting_type = "Core"
 
   tags = {
-      CreationTimestamp = timestamp() 
-      Name              = join("-", [random_pet.mac_workers.id, "lm"])
-      Terraform         = random_pet.mac_workers.id
+    CreationTimestamp = timestamp()
+    Name              = join("-", [random_pet.mac_workers.id, "lm"])
+    Terraform         = random_pet.mac_workers.id
   }
 
   # ignore on tag changes
@@ -139,12 +139,12 @@ resource "aws_iam_role" "ec2_role" {
   path = "/"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": {
-      "Sid": "AllowSSMSesionManager"
-      "Effect": "Allow",
-      "Principal": {"Service": "ec2.amazonaws.com"},
-      "Action": "sts:AssumeRole"
+    "Version" : "2012-10-17",
+    "Statement" : {
+      "Sid" : "AllowSSMSesionManager"
+      "Effect" : "Allow",
+      "Principal" : { "Service" : "ec2.amazonaws.com" },
+      "Action" : "sts:AssumeRole"
     }
   })
 }
@@ -154,12 +154,12 @@ resource "aws_iam_role" "ssm_role" {
   path = "/"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": {
-      "Sid": "AllowSSMSesionManager"
-      "Effect": "Allow",
-      "Principal": {"Service": "ssm.amazonaws.com"},
-      "Action": "sts:AssumeRole"
+    "Version" : "2012-10-17",
+    "Statement" : {
+      "Sid" : "AllowSSMSesionManager"
+      "Effect" : "Allow",
+      "Principal" : { "Service" : "ssm.amazonaws.com" },
+      "Action" : "sts:AssumeRole"
     }
   })
 }
@@ -208,13 +208,13 @@ resource "aws_launch_template" "mac_workers" {
   #Can specify the ami in var
   #image_id      = var.ami_id
   #Or get the AMI use version
-  image_id           = data.aws_ami.mac.id
+  image_id      = data.aws_ami.mac.id
   instance_type = "mac1.metal"
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ssm_inst_profile.name
   }
-  
+
   # Ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template
   #leverage Variables to list security groups
   #vpc_security_group_ids = slice(var.security_group_ids, 0, length(var.security_group_ids)) # Security Group IDs for ASG in non-default vpc
@@ -249,7 +249,7 @@ resource "aws_launch_template" "mac_workers" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      CreationTimestamp = timestamp() 
+      CreationTimestamp = timestamp()
       Name              = join("-", [random_pet.mac_workers.id, "node"])
       Terraform         = random_pet.mac_workers.id
     }
@@ -257,8 +257,8 @@ resource "aws_launch_template" "mac_workers" {
 
   # Launch Template Resource Tags
   tags = {
-    Name              = join("-", [random_pet.mac_workers.id, "lt"])
-    Terraform         = random_pet.mac_workers.id
+    Name      = join("-", [random_pet.mac_workers.id, "lt"])
+    Terraform = random_pet.mac_workers.id
   }
 
   lifecycle {
@@ -279,16 +279,16 @@ resource "aws_autoscaling_group" "mac_workers" {
   name = random_pet.mac_workers.id
 
   # Testing: Toggle between EC2 & ELB Health Checks as needed
-  health_check_type = "EC2"
+  health_check_type         = "EC2"
   health_check_grace_period = 300
   # Enable ELB health checks - note: uncomment when sample app running at launch
   # health_check_type = "ELB"
   # health_check_grace_period = 300 # time before first health check
 
   # Desired Capacity
-  desired_capacity   = var.number_of_instances
-  max_size           = var.max_num_instances
-  min_size           = var.min_num_instances
+  desired_capacity = var.number_of_instances
+  max_size         = var.max_num_instances
+  min_size         = var.min_num_instances
 
   # ASG Metrics Enabled
   metrics_granularity = "1Minute"
@@ -403,8 +403,8 @@ resource "aws_autoscaling_policy" "mac_workers" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
-    target_value      = 10.0
-    disable_scale_in  = false # false by default so will change asg desired_capacity
+    target_value     = 10.0
+    disable_scale_in = false # false by default so will change asg desired_capacity
   }
 
   # target_tracking_configuration {
@@ -439,26 +439,26 @@ resource "aws_security_group" "apple_remote_desktop" {
 
   ingress = [
     {
-      description = "SSH over 22"
-      from_port   = 0
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = var.management_subnet
+      description      = "SSH over 22"
+      from_port        = 0
+      to_port          = 22
+      protocol         = "tcp"
+      cidr_blocks      = var.management_subnet
       ipv6_cidr_blocks = []
-      prefix_list_ids = []
-      security_groups = []
-      self = false
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
     },
     {
-      description = "VNC for ARD"
-      from_port   = 0
-      to_port     = 5900
-      protocol    = "tcp"
-      cidr_blocks = var.management_subnet
+      description      = "VNC for ARD"
+      from_port        = 0
+      to_port          = 5900
+      protocol         = "tcp"
+      cidr_blocks      = var.management_subnet
       ipv6_cidr_blocks = []
-      prefix_list_ids = []
-      security_groups = []
-      self = false
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
     }
   ]
 
@@ -470,9 +470,9 @@ resource "aws_security_group" "apple_remote_desktop" {
       protocol         = "-1"
       cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
-      prefix_list_ids = []
-      security_groups = []
-      self = false
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
     }
   ]
 

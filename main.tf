@@ -253,7 +253,7 @@ data "aws_ami" "mac" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["amzn-ec2-macos-10.15*"]
+    values = ["amzn-ec2-macos-11.6*"]
   }
   filter {
     name   = "virtualization-type"
@@ -387,20 +387,20 @@ resource "aws_autoscaling_group" "mac_workers" {
   # }
 
   # Auto-Scaling Group Resource Tags
-  tags = concat(
-    [
-      {
-        key                 = "Name"
-        value               = join("-", [random_pet.mac_workers.id, "node"])
-        propagate_at_launch = true
-      },
-      {
-        key                 = "Terraform"
-        value               = random_pet.mac_workers.id
-        propagate_at_launch = true
-      } 
-    ]
-  )
+  // tags = concat(
+  //   [
+  //     {
+  //       key                 = "Name"
+  //       value               = join("-", [random_pet.mac_workers.id, "node"])
+  //       propagate_at_launch = true
+  //     },
+  //     {
+  //       key                 = "Terraform"
+  //       value               = random_pet.mac_workers.id
+  //       propagate_at_launch = true
+  //     } 
+  //   ]
+  // )
 
   lifecycle {
     create_before_destroy = true

@@ -8,12 +8,9 @@ workflows:
     jobs:
       - terraform/fmt:
           checkout: true
+          tag: 1.1.5
       - terraform/validate:
           checkout: true
+          tag: 1.1.5
           requires:
             - terraform/fmt
-      - terraform/plan:
-          checkout: true
-          persist-workspace: true
-          requires:
-            - terraform/validate

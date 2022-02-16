@@ -1,6 +1,11 @@
-variable "aws_region" {}
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+}
+
 variable "aws_availability_zone" {}
-// variable "subnet_id" {}
+
+variable "runner_auth_token" {}
 
 variable "name" {
   description = "If specified, will set the name of the module to this. If unspecified, a name will be generated"

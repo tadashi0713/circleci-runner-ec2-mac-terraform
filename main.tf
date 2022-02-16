@@ -261,6 +261,16 @@ resource "aws_launch_template" "mac_workers" {
     Terraform = random_pet.mac_workers.id
   }
 
+  user_data = base64encode(
+    templatefile(
+      "${path.module}/userdata/runner_install.sh.tpl",
+      {
+        runner_name = format("%{if var.worker_prefix != ""}${var.worker_prefix}-%{endif}circleci-runner")
+        auth_token  = var.runner_auth_token
+      }
+    )
+  )
+
   lifecycle {
     ignore_changes = [
       # Ignore changes to tags, e.g. because a management agent

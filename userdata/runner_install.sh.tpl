@@ -11,7 +11,7 @@ LAUNCH_AGENT_API_AUTH_TOKEN=${auth_token}
 RUNNER_NAME="${runner_name}-$TIMESTAMP"
 
 # Default binary & config installation location
-prefix=/opt/circleci
+prefix=/System/Volumes/Data/circleci
 configDir=/Library/Preferences/com.circleci.runner
 
 defaultConfig=$(cat <<EOF
@@ -104,7 +104,7 @@ download_launch_agent(){
   local version="$(get_json_field "$dlResp" "version")"
 
   # make directory for launch-agent-download
-  targetDir="darwin/$arch/$version"
+  targetDir="$prefix/darwin/$arch/$version"
   mkdir -p "$targetDir"
 
   # download the launch agent binary
@@ -157,12 +157,12 @@ fi
 userId="$(id -u "$defaultUser")"
 install_dependencies
 
-# # Set up runner directory
-# mkdir -p "$prefix/workdir"
+# Set up runner directory
+mkdir -p "$prefix/workdir"
 
-# # Downloading launch agent
-# echo "Downloading and verifying CircleCI Launch Agent Binary"
-# binaryPath="$(download_launch_agent)"
+# Downloading launch agent
+echo "Downloading and verifying CircleCI Launch Agent Binary"
+binaryPath="$(download_launch_agent)"
 
 # # Move the launch agent to the correct directory
 # cp "$binaryPath" "$prefix/$binaryName"

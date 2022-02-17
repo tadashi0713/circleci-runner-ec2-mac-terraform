@@ -47,6 +47,9 @@ defaultLaunchConfig=$(cat <<EOF
             <string>$RUNNER_NAME</string>
         </array>
 
+        <key>UserName</key>
+	      <string>$defaultUser</string>
+
         <key>RunAtLoad</key>
         <true/>
 

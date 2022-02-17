@@ -14,16 +14,65 @@ RUNNER_NAME="${runner_name}-$TIMESTAMP"
 prefix=/System/Volumes/Data/circleci
 configDir=/Library/Preferences/com.circleci.runner
 
+# Config file template
 defaultConfig=$(cat <<EOF
 api:
   auth_token: $LAUNCH_AGENT_API_AUTH_TOKEN
   runner:
-    name: $RUNNER_NAME
     command_prefix: ["sudo", "-niHu", "$defaultUser", "--"]
-    working_directory: /tmp/%s
+    working_directory: $prefix/workdir/%s
     cleanup_working_directory: true
   logging:
     file: /Library/Logs/com.circleci.runner.log
+EOF
+)
+
+defaultLaunchConfig=$(cat <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.circleci.runner</string>
+
+        <key>Program</key>
+        <string>$prefix/circleci-launch-agent</string>
+
+        <key>ProgramArguments</key>
+        <array>
+            <string>circleci-launch-agent</string>
+            <string>--config</string>
+            <string>/Library/Preferences/com.circleci.runner/launch-agent-config.yaml</string>
+            <string>--runner.name</string>
+            <string>$RUNNER_NAME</string>
+        </array>
+
+        <key>RunAtLoad</key>
+        <true/>
+
+        <!-- The agent needs to run at all times -->
+        <key>KeepAlive</key>
+        <true/>
+
+        <!-- This prevents macOS from limiting the resource usage of the agent -->
+        <key>ProcessType</key>
+        <string>Interactive</string>
+
+        <!-- Increase the frequency of restarting the agent on failure, or post-update -->
+        <key>ThrottleInterval</key>
+        <integer>3</integer>
+
+        <!-- Wait for 10 minutes for the agent to shut down (the agent itself waits for tasks to complete) -->
+        <key>ExitTimeOut</key>
+        <integer>600</integer>
+
+        <!-- The agent uses its own logging and rotation to file -->
+        <key>StandardOutPath</key>
+        <string>/dev/null</string>
+        <key>StandardErrorPath</key>
+        <string>/dev/null</string>
+    </dict>
+</plist>
 EOF
 )
 
@@ -122,16 +171,16 @@ download_launch_agent(){
 configure_launch_agent(){
   # Create the configuration directories
   mkdir -p "$configDir"
-  mkdir -p "$launchConfigDir"
+  # mkdir -p "$launchConfigDir"
 
-  if [ "$noConfig" != "set" ]; then
-    echo "$defaultConfig" > "$configDir"/"$configFileName"
-  fi
+  echo "$defaultConfig" > "$configDir"/"$configFileName"
 
-  if [ "$noDaemon" != "set" ]; then
-    echo "$defaultLaunchConfig" > "$launchConfigDir"/com.circleci.runner.plist
-    chmod 644 "$launchConfigDir"/com.circleci.runner.plist
-  fi
+
+  # if [ "$noDaemon" != "set" ]; then
+  echo "$defaultLaunchConfig" > /Library/LaunchDaemons/com.circleci.runner.plist
+  chmod 644 /Library/LaunchDaemons/com.circleci.runner.plist
+  sudo launchctl load /Library/LaunchDaemons/com.circleci.runner.plist
+  # fi
 }
 
 #### Installation Script ####
@@ -164,17 +213,17 @@ mkdir -p "$prefix/workdir"
 echo "Downloading and verifying CircleCI Launch Agent Binary"
 binaryPath="$(download_launch_agent)"
 
-# # Move the launch agent to the correct directory
-# cp "$binaryPath" "$prefix/$binaryName"
-# chmod +x "$prefix/$binaryName"  
+# Move the launch agent to the correct directory
+cp "$binaryPath" "$prefix/$binaryName"
+chmod +x "$prefix/$binaryName"  
 
-# echo "Installing the CircleCI Launch Agent"
+echo "Installing the CircleCI Launch Agent"
 
-# # Create the configuration
-# configure_launch_agent
+# Create the configuration
+configure_launch_agent
 
 # # Is this a good idea? Could cause an issue if the temp install dir already exists and has stuff in it
 # echo "$binaryPath" | rm -rf "$(awk -F '/' '{print $1}')"
 
-# echo "CircleCI Launch Agent Binary succesfully installed"
-# echo "To validate the CircleCI Launch Agent is running correctly, you can check in log reports for the logs called com.circleci.runner.log"
+echo "CircleCI Launch Agent Binary succesfully installed"
+echo "To validate the CircleCI Launch Agent is running correctly, you can check in log reports for the logs called com.circleci.runner.log"

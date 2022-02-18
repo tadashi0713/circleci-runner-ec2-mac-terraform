@@ -11,6 +11,7 @@ repos:
 - repo: git://github.com/antonbabenko/pre-commit-terraform
   rev: v1.62.3 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
   hooks:
+    - id: terraform_providers_lock
     - id: terraform_tfsec
     - id: terraform_docs
     - id: checkov

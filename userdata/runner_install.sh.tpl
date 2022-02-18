@@ -13,6 +13,7 @@ RUNNER_NAME="${runner_name}-$TIMESTAMP"
 # Default binary & config installation location
 prefix=/System/Volumes/Data/circleci
 configDir=/Library/Preferences/com.circleci.runner
+launchConfigPath=/Library/LaunchDaemons/com.circleci.runner.plist
 
 # Config file template
 defaultConfig=$(cat <<EOF
@@ -172,18 +173,12 @@ download_launch_agent(){
 }
 
 configure_launch_agent(){
-  # Create the configuration directories
   mkdir -p "$configDir"
-  # mkdir -p "$launchConfigDir"
-
   echo "$defaultConfig" > "$configDir"/"$configFileName"
 
-
-  # if [ "$noDaemon" != "set" ]; then
-  echo "$defaultLaunchConfig" > /Library/LaunchDaemons/com.circleci.runner.plist
-  chmod 644 /Library/LaunchDaemons/com.circleci.runner.plist
-  sudo launchctl load /Library/LaunchDaemons/com.circleci.runner.plist
-  # fi
+  echo "$defaultLaunchConfig" > $launchConfigPath
+  chmod 644 $launchConfigPath
+  sudo launchctl load $launchConfigPath
 }
 
 #### Installation Script ####
@@ -224,9 +219,6 @@ echo "Installing the CircleCI Launch Agent"
 
 # Create the configuration
 configure_launch_agent
-
-# # Is this a good idea? Could cause an issue if the temp install dir already exists and has stuff in it
-# echo "$binaryPath" | rm -rf "$(awk -F '/' '{print $1}')"
 
 echo "CircleCI Launch Agent Binary succesfully installed"
 echo "To validate the CircleCI Launch Agent is running correctly, you can check in log reports for the logs called com.circleci.runner.log"

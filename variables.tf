@@ -41,12 +41,6 @@ variable "max_num_instances" {
 # Default values supplied, but you should still review each one.
 #-------------------------------------------------------------------------------
 
-variable "name" {
-  description = "If specified, will set the name of the module to this. If unspecified, a name will be generated"
-  type        = string
-  default     = ""
-}
-
 variable "ami_id" {
   description = "SSM Parameter used to lookup the latest EC2 Mac1 AMI"
   type        = string

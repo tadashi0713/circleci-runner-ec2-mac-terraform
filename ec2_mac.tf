@@ -120,6 +120,9 @@ resource "aws_launch_template" "mac_workers" {
   #Or get the AMI use version
   image_id      = data.aws_ami.mac.id
   instance_type = "mac1.metal"
+  metadata_options {
+    http_tokens = "required"
+  } 
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ssm_inst_profile.name
@@ -382,19 +385,19 @@ resource "aws_security_group" "apple_remote_desktop" {
     }
   ]
 
-  egress = [
-    {
-      description      = "Allow all outbound traffic"
-      from_port        = 0
-      to_port          = 0
-      protocol         = "-1"
-      cidr_blocks      = ["0.0.0.0/0"]
-      ipv6_cidr_blocks = ["::/0"]
-      prefix_list_ids  = []
-      security_groups  = []
-      self             = false
-    }
-  ]
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    # tfsec:ignore:aws-vpc-no-public-egress-sgr
+    cidr_blocks = ["0.0.0.0/0"]
+    # tfsec:ignore:aws-vpc-no-public-egress-sgr
+    ipv6_cidr_blocks = ["::/0"]
+    prefix_list_ids  = []
+    security_groups  = []
+    self             = false
+  }
 
   tags = {
     Name = "remote desktop connection"

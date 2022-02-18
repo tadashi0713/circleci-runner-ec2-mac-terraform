@@ -1,20 +1,48 @@
+#-------------------------------------------------------------------------------
+# REQUIRED VARS
+# Required input values without which the plan will not run.
+#-------------------------------------------------------------------------------
+
 variable "aws_region" {
-  description = "AWS region"
+  description = "AWS Region in which Runners will be deployed."
   type        = string
 }
 
-variable "aws_availability_zone" {}
+variable "aws_availability_zone" {
+  description = "AWS Availability Zone in which Runners will be deployed."
+  type        = string
+}
 
-variable "runner_auth_token" {}
+variable "runner_auth_token" {
+  description = "Runner auth token.  See docs for how to generate one." #See https://circleci.com/docs/2.0/runner-installation/#authentication
+  type        = string
+}
+
+variable "number_of_instances" {
+  description = "Desired Capacity of EC2 Mac1 instances in ASG"
+  type        = number
+  default     = 2
+}
+
+variable "min_num_instances" {
+  description = "Min number of EC2 Mac1 instances in ASG"
+  type        = number
+  default     = 1
+}
+
+variable "max_num_instances" {
+  description = "Max number of EC2 Mac1 instances in ASG"
+  type        = number
+  default     = 3
+}
+
+#-------------------------------------------------------------------------------
+# OPTIONAL VARS
+# Default values supplied, but you should still review each one.
+#-------------------------------------------------------------------------------
 
 variable "name" {
   description = "If specified, will set the name of the module to this. If unspecified, a name will be generated"
-  type        = string
-  default     = ""
-}
-
-variable "user_data" {
-  description = "EC2: The user data to provide when launching the instance"
   type        = string
   default     = ""
 }
@@ -35,24 +63,6 @@ variable "host_resource_group_prefix" {
   description = "Prefix used to create ASG Launch template & Host Resource Group license configuration"
   type        = string
   default     = "mac1-"
-}
-
-variable "number_of_instances" {
-  description = "Desired Capacity of EC2 Mac1 instances in ASG"
-  type        = number
-  default     = 2
-}
-
-variable "min_num_instances" {
-  description = "Min number of EC2 Mac1 instances in ASG"
-  type        = number
-  default     = 1
-}
-
-variable "max_num_instances" {
-  description = "Max number of EC2 Mac1 instances in ASG"
-  type        = number
-  default     = 3
 }
 
 variable "worker_prefix" {

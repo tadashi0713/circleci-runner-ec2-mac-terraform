@@ -20,6 +20,7 @@ defaultConfig=$(cat <<EOF
 api:
   auth_token: $LAUNCH_AGENT_API_AUTH_TOKEN
   runner:
+    name: $RUNNER_NAME
     command_prefix: ["sudo", "-niHu", "$defaultUser", "--"]
     working_directory: $prefix/workdir/%s
     cleanup_working_directory: true
@@ -37,13 +38,13 @@ defaultLaunchConfig=$(cat <<EOF
         <string>com.circleci.runner</string>
 
         <key>Program</key>
-        <string>$prefix/circleci-launch-agent</string>
+        <string>$prefix/$binaryName</string>
 
         <key>ProgramArguments</key>
         <array>
-            <string>circleci-launch-agent</string>
+            <string>$binaryName</string>
             <string>--config</string>
-            <string>/Library/Preferences/com.circleci.runner/launch-agent-config.yaml</string>
+            <string>$configDir/$configFileName</string>
             <string>--runner.name</string>
             <string>$RUNNER_NAME</string>
         </array>

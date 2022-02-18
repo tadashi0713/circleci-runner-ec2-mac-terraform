@@ -122,7 +122,7 @@ resource "aws_launch_template" "mac_workers" {
   instance_type = "mac1.metal"
   metadata_options {
     http_tokens = "required"
-  } 
+  }
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ssm_inst_profile.name

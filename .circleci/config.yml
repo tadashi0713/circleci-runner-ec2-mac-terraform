@@ -12,5 +12,3 @@ workflows:
       - terraform/validate:
           checkout: true
           tag: 1.1.5
-          requires:
-            - terraform/fmt

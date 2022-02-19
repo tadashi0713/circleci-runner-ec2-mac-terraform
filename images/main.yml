@@ -1,5 +1,5 @@
 ---
-- name: Mac Setup
+- name: EC2 Mac Setup
   # https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#local-playbooks
   hosts: 127.0.0.1
   connection: local
@@ -8,42 +8,10 @@
   vars:
     brew_taps:
       - homebrew/core
-      - homebrew/cask
     brew_cask_apps:
-      - alfred
-      - clipy
       - docker
-      - firefox
-      - google-chrome
-      - google-japanese-ime
-      - google-hangouts
-      - iterm2
-      - licecap
-      - snip
-      - visual-studio-code
     brew_packages:
-      - autoconf
-      - awscli
-      - bash-completion
-      - docker-compose
-      - docker-machine
-      - doxygen
-      - git
-      - git-lfs
-      - jq
-      - nmap
-      - openssl
-      - ssh-copy-id
-      - tig
-      - tree
-      - wget
-      - zsh
-      - zsh-syntax-highlighting
-
-  # pre_tasks:
-    ## https://brew.sh/
-    # - name: Install Homebrew
-    #   command: '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+      - go
 
   tasks:
     # https://docs.ansible.com/ansible/2.7/modules/homebrew_tap_module.html

@@ -91,32 +91,6 @@ get_arch(){
   esac
 }
 
-install_dependencies(){
-  local deps="shasum git tar gzip"
-  local toInstall=""
-  for dep in $deps
-  do
-
-    if ! command -v "$dep" &> /dev/null; then
-      toInstall="$toInstall $dep"
-    fi
-
-  if [ ! -z "$toInstall" ]; then
-    # only check for homebrew availability if required dependencies are missing
-    if ! command -v brew &> /dev/null; then
-    echo "Homebrew was not found, installing now"
-    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-
-    for d in $toInstall
-    do
-      sudo -u \#"$userId" brew install "$dep"
-    done
-
-  fi
-  done
-}
-
 get_json_field(){
   # $1 expected as resp body
   # $2 expected as field
@@ -201,9 +175,6 @@ if ! id -u "$defaultUser" -eq 0; then
   echo "See https://circleci.com/docs/2.0/runner-installation/ for details" 
   exit 1
 fi
-
-userId="$(id -u "$defaultUser")"
-install_dependencies
 
 # Set up runner directory
 mkdir -p "$prefix/workdir"

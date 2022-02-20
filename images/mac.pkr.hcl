@@ -118,13 +118,6 @@ build {
       "sudo /usr/local/bin/ec2-macos-init clean --all"
     ]
   }
-  # provisioner "shell" {
-  #   inline = [
-  #     "/usr/local/bin/brew update",
-  #     "/usr/local/bin/brew upgrade",
-  #     "/usr/local/bin/brew install go"
-  #   ]
-  # }
   provisioner "ansible" {
     playbook_file = "./main.yml"
   }

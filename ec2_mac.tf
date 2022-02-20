@@ -121,7 +121,8 @@ resource "aws_launch_template" "mac_workers" {
   image_id      = data.aws_ami.mac.id
   instance_type = "mac1.metal"
   metadata_options {
-    http_tokens = "required"
+    http_endpoint = "enabled"
+    http_tokens   = "required"
   }
 
   iam_instance_profile {

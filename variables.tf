@@ -18,6 +18,16 @@ variable "runner_auth_token" {
   type        = string
 }
 
+variable "ami_id" {
+  description = "SSM Parameter used to lookup the EC2 Mac1 AMI"
+  type        = string
+}
+
+#-------------------------------------------------------------------------------
+# OPTIONAL VARS
+# Default values supplied, but you should still review each one.
+#-------------------------------------------------------------------------------
+
 variable "number_of_instances" {
   description = "Desired Capacity of EC2 Mac1 instances in ASG"
   type        = number
@@ -34,17 +44,6 @@ variable "max_num_instances" {
   description = "Max number of EC2 Mac1 instances in ASG"
   type        = number
   default     = 3
-}
-
-#-------------------------------------------------------------------------------
-# OPTIONAL VARS
-# Default values supplied, but you should still review each one.
-#-------------------------------------------------------------------------------
-
-variable "ami_id" {
-  description = "SSM Parameter used to lookup the latest EC2 Mac1 AMI"
-  type        = string
-  default     = "ami-08c245b8fa8669594"
 }
 
 variable "cf_stack_name" {

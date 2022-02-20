@@ -7,11 +7,10 @@
   # become: yes
   vars:
     brew_taps:
-      - homebrew/core
-    brew_cask_apps:
-      - docker
+      - robotsandpencils/made
     brew_packages:
-      - go
+      - xcodes
+      - ruby-build
 
   tasks:
     # https://docs.ansible.com/ansible/2.7/modules/homebrew_tap_module.html
@@ -20,15 +19,6 @@
         name: "{{ item }}"
         state: "present"
       with_items: "{{ brew_taps }}"
-
-    # https://docs.ansible.com/ansible/2.7/modules/homebrew_cask_module.html
-    - name: Install Homebrew Cask Packages
-      homebrew_cask:
-        name: "{{ item }}"
-        state: "present"
-        install_options: "appdir=/Applications"
-        accept_external_apps: yes
-      with_items: "{{ brew_cask_apps }}"
 
     # https://docs.ansible.com/ansible/2.7/modules/homebrew_module.html
     - name: Update Homebrew
@@ -39,3 +29,21 @@
       homebrew:
         name: "{{ brew_packages }}"
         state: "present"
+
+    # - name: Install xcode-install gem
+    #   gem:
+    #     name: xcode-install
+    #     include_doc: false
+    #     user_install: false
+    #     state: latest
+    #     executable: /usr/bin/gem
+    #   become: true
+
+    # - name: Install Xcode 13.2.1
+    #   xcode:
+    #     version: "{{ xcode_version }}"
+    #   environment:
+    #     GEM_HOME: "{{ system_gem_dir }}"
+    #     GEM_PATH: "{{ system_gem_dir }}"
+    #     XCODE_INSTALL_USER: "{{ xcode_install_user }}"
+    #     XCODE_INSTALL_PASSWORD: "{{ xcode_install_password }}"

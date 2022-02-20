@@ -14,7 +14,7 @@ variable "aws_availability_zone" {
 }
 
 variable "runner_auth_token" {
-  description = "Runner auth token.  See docs for how to generate one." #See https://circleci.com/docs/2.0/runner-installation/#authentication
+  description = "Runner auth token.  See docs for how to generate one. https://circleci.com/docs/2.0/runner-installation/#authentication"
   type        = string
 }
 
@@ -27,6 +27,18 @@ variable "ami_id" {
 # OPTIONAL VARS
 # Default values supplied, but you should still review each one.
 #-------------------------------------------------------------------------------
+
+variable "cf_stack_name" {
+  description = "Dedicated host CloudFormation stack name. It can include letters (A-Z and a-z), numbers (0-9), and dashes (-)."
+  type        = string
+  default     = "host-resource-group"
+}
+
+variable "host_resource_group_prefix" {
+  description = "Prefix used to create ASG Launch template & Host Resource Group license configuration"
+  type        = string
+  default     = "mac1-"
+}
 
 variable "number_of_instances" {
   description = "Desired Capacity of EC2 Mac1 instances in ASG"
@@ -46,28 +58,10 @@ variable "max_num_instances" {
   default     = 3
 }
 
-variable "cf_stack_name" {
-  description = "Dedicated host CloudFormation stack name. It can include letters (A-Z and a-z), numbers (0-9), and dashes (-)."
-  type        = string
-  default     = "host-resource-group"
-}
-
-variable "host_resource_group_prefix" {
-  description = "Prefix used to create ASG Launch template & Host Resource Group license configuration"
-  type        = string
-  default     = "mac1-"
-}
-
 variable "worker_prefix" {
   description = "Prefix used to create ASG Launch template & Host Resource Group license configuration"
   type        = string
-  default     = "ec2"
-}
-
-variable "tags" {
-  description = "(Optional) A list of tags to associate with the CloudFormation stack. Does not propagate to the Dedicated Host."
-  type        = map(string)
-  default     = null
+  default     = "circleci-runner-mac"
 }
 
 variable "management_subnet" {
@@ -97,17 +91,11 @@ variable "subnet_ids" {
 variable "security_group_ids" {
   description = "Security Group Ids used by EC2 Mac1 instances in ASG"
   type        = list(string)
-  default     = ["sg-0d0c462ff917f04e0"]
+  default     = []
 }
 
 variable "mac_ebs_volume_size" {
   description = "EC2 Mac1 EBS volume size"
   type        = number
-  default     = 100
-}
-
-variable "key_name" {
-  description = "SSH key"
-  type        = string
-  default     = ""
+  default     = 150
 }

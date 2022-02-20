@@ -14,4 +14,6 @@ repos:
     - id: terraform_providers_lock
     - id: terraform_tfsec
     - id: terraform_docs
+      args:
+        - --hook-config=--add-to-existing-file=true 
     - id: checkov

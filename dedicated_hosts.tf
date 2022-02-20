@@ -15,7 +15,6 @@ resource "aws_licensemanager_license_configuration" "license_config" {
 resource "aws_cloudformation_stack" "mac1_host_resource_group" {
   #checkov:skip=CKV_AWS_124: "Ensure that CloudFormation stacks are sending event notifications to an SNS topic"
   name = random_pet.host_resource_group.id
-  #tags = var.tags
 
   template_body = <<STACK
 {

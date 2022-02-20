@@ -11,6 +11,7 @@
     brew_packages:
       - xcodes
       - ruby-build
+      - rbenv
 
   tasks:
     # https://docs.ansible.com/ansible/2.7/modules/homebrew_tap_module.html
@@ -30,6 +31,16 @@
         name: "{{ brew_packages }}"
         state: "present"
 
+    - name: Install ruby
+      shell:
+        cmd: |
+          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+          echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+          source ~/.zshrc
+          rbenv install 3.1.0
+          rbenv gloval 3.1.0
+          ruby --version
+
     # - name: Install xcode-install gem
     #   gem:
     #     name: xcode-install
@@ -39,7 +50,7 @@
     #     executable: /usr/bin/gem
     #   become: true
 
-    # - name: Install Xcode 13.2.1
+    # - name: Install Xcode {{ xcode_version }}
     #   xcode:
     #     version: "{{ xcode_version }}"
     #   environment:

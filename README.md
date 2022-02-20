@@ -50,7 +50,6 @@ No modules.
 | [random_pet.host_resource_group](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [random_pet.mac_workers](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [random_string.str_prefix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
-| [aws_ami.mac](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_cloudformation_export.host_resource_group_arn](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudformation_export) | data source |
 
 ## Inputs

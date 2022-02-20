@@ -100,25 +100,9 @@ resource "aws_ssm_activation" "ssm_attach" {
   depends_on         = [aws_iam_role_policy_attachment.ssm_attach]
 }
 
-data "aws_ami" "mac" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["amzn-ec2-macos-11.6*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["amazon"]
-}
-
 resource "aws_launch_template" "mac_workers" {
-  name = random_pet.mac_workers.id
-  #Can specify the ami in var
-  #image_id      = var.ami_id
-  #Or get the AMI use version
-  image_id      = data.aws_ami.mac.id
+  name          = random_pet.mac_workers.id
+  image_id      = var.ami_id
   instance_type = "mac1.metal"
   metadata_options {
     http_endpoint = "enabled"

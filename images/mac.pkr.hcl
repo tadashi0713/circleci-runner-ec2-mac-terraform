@@ -118,7 +118,17 @@ build {
       "sudo /usr/local/bin/ec2-macos-init clean --all"
     ]
   }
-  provisioner "ansible" {
-    playbook_file = "./main.yml"
+  # Homebrew
+  provisioner "shell" {
+    inline = [
+      "/usr/local/bin/brew update",
+      "/usr/local/bin/brew upgrade",
+      "/usr/local/bin/brew install ruby-build rbenv"
+    ]
+  }
+  provisioner "shell" {
+    scripts = [
+      "./ruby.sh"
+    ]
   }
 }

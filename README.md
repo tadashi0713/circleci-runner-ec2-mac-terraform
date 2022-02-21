@@ -2,7 +2,7 @@
 
 
 * 
-* [Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
+
 
 ## Features
 
@@ -14,11 +14,24 @@
 
 ### Prerequisites
 
+* Terraform
+* Packer
+
 ### Build AMI Image using Packer + Ansible
 
 In order to install 
 
-### Provision 
+<img src="./packer.png" width="500px">
+
+For more information, please take a look at below document.
+
+[Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
+
+### Provision using Terraform
+
+For more information, please take a look at below document.
+
+[Implementing Auto Scaling for EC2 Mac Instances](https://aws.amazon.com/jp/blogs/compute/implementing-autoscaling-for-ec2-mac-instances/)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers

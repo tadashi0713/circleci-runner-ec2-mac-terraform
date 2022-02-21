@@ -15,5 +15,6 @@ repos:
     - id: terraform_tfsec
     - id: terraform_docs
       args:
-        - --hook-config=--add-to-existing-file=true 
+        - --hook-config=--add-to-existing-file=true
+        - --args=--config=.terraform-docs.yml
     - id: checkov

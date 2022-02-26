@@ -16,6 +16,7 @@
 
 * Terraform
 * Packer
+* Session Manager
 
 ### Build AMI Image using Packer + Ansible
 

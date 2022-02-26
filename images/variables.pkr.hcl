@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 
 variable "aws_region" {
-  type    = string
+  type = string
 }
 
 variable "subnet_id" {
@@ -42,7 +42,7 @@ variable "root_volume_size_gb" {
 }
 
 variable "macos_version" {
-  type = string
+  type    = string
   default = "11.6"
 }
 

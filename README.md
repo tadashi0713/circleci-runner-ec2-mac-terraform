@@ -1,28 +1,64 @@
 # CircleCI Runner EC2 Mac Terraform
 
 
-* 
-
 
 ## Features
 
 * 
-* 
+* After AWS provide M1 mac 
 
 
 ## Getting Started
 
 ### Prerequisites
 
-* Terraform
-* Packer
-* Session Manager
+* [Terraform](https://www.terraform.io)
+* [Packer](https://www.packer.io)
+* [AWS CLI with Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+* [Fastlane](https://docs.fastlane.tools)
 
 ### Build AMI Image using Packer + Ansible
 
-In order to install 
+In order to build/test iOS app in EC2 Mac instances, you have to install Xcode and other softwares since default AMI
+
+, and it takes more than 1 hours, custom AMIs for EC2 Mac instances
 
 <img src="./packer.png" width="500px">
+
+```sh
+aws ec2 describe-instance-type-offerings --filters Name=instance-type,Values=mac1.metal Name=location,Values=us-east-2b --location-type availability-zone --region us-east-2
+```
+
+```json
+{
+    "InstanceTypeOfferings": [
+        {
+            "InstanceType": "mac1.metal",
+            "LocationType": "availability-zone",
+            "Location": "us-east-2b"
+        }
+    ]
+}
+```
+
+In 
+
+There are variables to install Xcode
+
+In addition to put 
+
+[](./images/variables.pkr.hcl)
+
+
+
+Since Apple 
+
+```sh
+cd images
+FASTLANE_SESSION='genrated session by fastlane spaceauth' packer build .
+```
+
+It would take more than 1 hour to build AMI image.
 
 For more information, please take a look at below document.
 
@@ -33,6 +69,10 @@ For more information, please take a look at below document.
 For more information, please take a look at below document.
 
 [Implementing Auto Scaling for EC2 Mac Instances](https://aws.amazon.com/jp/blogs/compute/implementing-autoscaling-for-ec2-mac-instances/)
+
+## Work in progress
+
+* 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers

@@ -43,7 +43,7 @@ variable "root_volume_size_gb" {
 
 variable "macos_version" {
   type    = string
-  default = "11.6"
+  default = "12.2"
 }
 
 variable "xcode_version" {

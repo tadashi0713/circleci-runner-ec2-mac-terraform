@@ -33,7 +33,8 @@ build {
       "XCODE_INSTALL_PASSWORD=${var.xcode_install_password}",
       "FASTLANE_SESSION=${var.fastlane_session}",
       "XCODE_VERSION=${var.xcode_version}",
-      "RUBY_VERSION=${var.ruby_version}"
+      "RUBY_VERSION=${var.ruby_version}",
+      "BUNDLER_VERSION=${var.bundler_version}"
     ]
   }
 }

@@ -55,3 +55,8 @@ variable "ruby_version" {
   type    = string
   default = "3.1.1"
 }
+
+variable "bundler_version" {
+  type    = string
+  default = "2.3.8"
+}

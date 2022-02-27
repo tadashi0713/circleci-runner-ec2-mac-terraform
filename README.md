@@ -59,8 +59,6 @@ Please also refer to this document provided by AWS.
 
 [Implementing Auto Scaling for EC2 Mac Instances](https://aws.amazon.com/jp/blogs/compute/implementing-autoscaling-for-ec2-mac-instances/)
 
-
-
 <img src="./docs/auto_scalling.png" width="500px">
 
 Before

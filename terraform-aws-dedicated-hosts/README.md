@@ -1,3 +1,5 @@
+# Terraform AWS Dedicated Host Module
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
 

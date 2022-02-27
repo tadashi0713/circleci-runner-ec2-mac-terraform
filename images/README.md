@@ -14,7 +14,7 @@ This time, we will create them with Packer.
 
 In order to build custom AMI using Packer, you will need EC2 Mac instance with Dedicated Host.
 
-First, check whether 
+First, in order to determine if a given Region and Availability Zone combination supports the mac1.metal instance type, use the describe-instance-type-offerings command of the AWS CLI.
 
 ```sh
 aws ec2 describe-instance-type-offerings --filters Name=instance-type,Values=mac1.metal Name=location,Values=us-east-2b --location-type availability-zone --region us-east-2
@@ -32,21 +32,17 @@ aws ec2 describe-instance-type-offerings --filters Name=instance-type,Values=mac
 }
 ```
 
-If you 
+Next, run the following CLI command to allocate a Dedicated Host.
 
 ```sh
 aws ec2 allocate-hosts --auto-placement on --region us-east-2 --availability-zone us-east-2b --instance-type mac1.metal --quantity 1
 ```
 
-In 
+We use this Dedicated Host to create the AMI via Packer.
 
 There are variables to install Xcode, you will need to pass required [variables](./images/variables.pkr.hcl)
 
-
-
 `xcode_install_email` and `xcode_install_password` are email/password of Apple Developer Program Account.
-
-In addition to put 
 
 Since Apple Developer Program only allows 2 factor authentication, you cannot authenticate only with email/password.
 
@@ -72,4 +68,4 @@ After packer build complete, you will get custom AMI ID.
 us-east-2: ami-hogehoge
 ```
 
-After you created custom AMI, you need to shutdown any launched instances and release the Dedicated Host.
+After you created custom AMI, you need to shutdown any launched instances and release the Dedicated Host in order to prevent incurring costs.

@@ -4,8 +4,8 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 
 ## Features
 
-* You can deploy / build and test iOS app in your private AWS VPC
-* . If runners are already provisioned, 
+* You can build and test iOS app in your private AWS VPC, AWS Region
+* Better at performance than resource classes which CircleCI Cloud supports(if runners are already provisioned).
 
 | Resource Class            | CPU   | RAM  |
 | ------------------------- | ----- | ---- |
@@ -14,24 +14,30 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 | x86 EC2 Mac(`mac1.metal`) | 12CPU | 32GB |
 | M1 EC2 Mac(`mac2.metal`)  | 12CPU | 16GB |
 
-* You can customize AMI to install other software(Flutter, etc.)
+* You can customize AMI to install other softwares needed for mobile development(Flutter SDK, etc.)
 * You can customize storage of EC2 Mac instances(AWS EBS)
-* After AWS provide M1 EC2 Mac(`mac2.metal`), this runner also can suppport(WIP, after GA)
+* After AWS provide M1 EC2 Mac(`mac2.metal`), this runner also can suppport(WIP, after M1 EC2 Mac become GA)
+* Can support [CircleCI Server](https://circleci.com/docs/2.0/server-3-overview/)(WIP)
 
 ## Work in progress
 
 * Customize for [CircleCI Server](https://circleci.com/docs/2.0/server-3-overview/)
 * [Enable SSH debug](https://circleci.com/docs/2.0/runner-overview/#debugging-with-ssh)
 * Support other autoscalling solutions
-* Support M1 EC2 Mac(`mac2.metal`, after GA)
+* Support M1 EC2 Mac(`mac2.metal`, after M1 EC2 Mac become GA)
 
-## Caution
+## Consideration
 
-* Before 
+* EC2 Mac instances are available only as bare metal instances on Dedicated Hosts, with a minimum allocation period of 24 hours before you can release the Dedicated Host.
+* Please take special note of the [costs](https://aws.amazon.com/ec2/dedicated-hosts/pricing/) of running EC2 Mac Dedicated hosts for 24 hours
+* For EC2 Mac instances, there is a one-to-one mapping between the Dedicated Host and the instance running on this host. This means you are not able to slice a Dedicated Host into multiple instances like you would for Linux and Windows machines.
+* For more information about EC2 Mac instances, please refer to [this document](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-mac-instances.html#mac-instance-considerations).
 
 ## Getting Started
 
 ### Prerequisites
+
+Please install them in your local machine.
 
 * [CircleCI CLI](https://circleci.com/docs/2.0/local-cli/)
 * [Terraform](https://www.terraform.io)
@@ -40,13 +46,21 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 * [Fastlane](https://docs.fastlane.tools)
 * [Apple Developer Program Account](https://developer.apple.com/programs/)
 
-### Build AMI Image using Packer
+### Build custom AMI using Packer
+
+Please also refer to this document provided by AWS.
+
+[Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
 
 In order to build/test iOS app in EC2 Mac instances, you have to install Xcode and other softwares since default AMI does not include them.
 
-and it takes more than 1 hours, custom AMIs for EC2 Mac instances
+Since it takes more than 1 hours to install them(especially Xcode), it's needed to create custom AMIs for EC2 Mac instances.
+
+This time, we will create them with Packer.
 
 <img src="./packer.png" width="500px">
+
+In order to build custom AMI using Packer, you will need EC2 Mac instance with Dedicated Host
 
 First, check 
 
@@ -80,12 +94,15 @@ There are variables to install Xcode, you will need to pass required [variables]
 
 In addition to put 
 
-Since Apple 
+Since Apple Developer Program only allows 2 factor authentication, you cannot authenticate only with email/password.
 
-```
+In order to solve this, 
+
+```sh
+fastlane spaceauth -u user@email.com
 ```
 
-After you prepare all variables and ``
+After you prepare all variables and `FASTLANE_SESSION`
 
 ```sh
 cd images
@@ -102,17 +119,13 @@ After packer build complete, you will get custom AMI ID.
 us-east-2: ami-hogehoge
 ```
 
-For more information, please take a look at below document.
+### Provision autoscalling EC2 Mac runner using Terraform
 
-[Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
-
-### Provision using Terraform
-
-Before
-
-For more information, please take a look at below document.
+Please also refer to this document provided by AWS.
 
 [Implementing Auto Scaling for EC2 Mac Instances](https://aws.amazon.com/jp/blogs/compute/implementing-autoscaling-for-ec2-mac-instances/)
+
+Before
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers

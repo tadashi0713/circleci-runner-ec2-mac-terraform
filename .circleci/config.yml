@@ -6,11 +6,8 @@ jobs:
       - image: hashicorp/packer:full-1.7.9
     steps:
       - checkout
-      # Ruby Orb(Install fastlane)
       - run:
-          command: |
-            packer fmt .
-            packer validate .
+          command: packer fmt .
           working_directory: images
 
 workflows:

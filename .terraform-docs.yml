@@ -5,4 +5,4 @@ sort:
   by: "required"
 
 sections:
-  hide: [outputs, requirements, modules]
+  hide: [requirements, modules]

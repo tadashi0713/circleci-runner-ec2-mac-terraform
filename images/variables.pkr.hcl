@@ -4,26 +4,31 @@
 #-------------------------------------------------------------------------------
 
 variable "aws_region" {
-  type = string
+  description = "AWS Region in which EC2 Mac will be deployed for packer build"
+  type        = string
 }
 
 variable "subnet_id" {
-  type = string
+  description = "Subnet ID in which EC2 Mac will be deployed for packer build"
+  type        = string
 }
 
 variable "xcode_install_email" {
-  type = string
+  description = "Email address of Apple Developer Program account in order to install Xcode"
+  type        = string
 }
 
 variable "xcode_install_password" {
-  type      = string
-  sensitive = true
+  description = "Password of Apple Developer Program account in order to install Xcode"
+  type        = string
+  sensitive   = true
 }
 
 variable "fastlane_session" {
-  type      = string
-  default   = env("FASTLANE_SESSION")
-  sensitive = true
+  description = "FASTLANE_SESSION to pass 2 factor authentication of Apple Developer Program in order to install Xcode"
+  type        = string
+  default     = env("FASTLANE_SESSION")
+  sensitive   = true
 }
 
 #-------------------------------------------------------------------------------
@@ -32,31 +37,37 @@ variable "fastlane_session" {
 #-------------------------------------------------------------------------------
 
 variable "ami_prefix" {
-  type    = string
-  default = "circleci-mac-runner"
+  description = "Prefix used for custom AMI"
+  type        = string
+  default     = "circleci-mac-runner"
 }
 
 variable "root_volume_size_gb" {
-  type    = number
-  default = 150
+  description = "Root volume size"
+  type        = number
+  default     = 150
 }
 
 variable "macos_version" {
-  type    = string
-  default = "12.2"
+  description = "macOS version"
+  type        = string
+  default     = "12.2"
 }
 
 variable "xcode_version" {
-  type    = string
-  default = "13.2.1"
+  description = "Xcode version"
+  type        = string
+  default     = "13.2.1"
 }
 
 variable "ruby_version" {
-  type    = string
-  default = "3.1.1"
+  description = "Ruby version"
+  type        = string
+  default     = "3.1.1"
 }
 
 variable "bundler_version" {
-  type    = string
-  default = "2.3.8"
+  description = "Bundler version"
+  type        = string
+  default     = "2.3.8"
 }

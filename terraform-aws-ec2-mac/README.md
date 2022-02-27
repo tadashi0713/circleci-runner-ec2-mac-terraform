@@ -42,4 +42,8 @@
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | Subnet Id for each Availability Zone in ASG | `list(string)` | `[]` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC Id for LB Target Group | `string` | `""` | no |
 | <a name="input_worker_prefix"></a> [worker\_prefix](#input\_worker\_prefix) | Prefix used to create ASG Launch template & Host Resource Group license configuration | `string` | `"circleci-runner-mac"` | no |
+
+## Outputs
+
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

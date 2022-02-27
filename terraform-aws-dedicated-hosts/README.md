@@ -21,4 +21,11 @@
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The Region that we will be building the module in | `string` | n/a | yes |
 | <a name="input_cf_stack_name"></a> [cf\_stack\_name](#input\_cf\_stack\_name) | Dedicated host CloudFormation stack name. It can include letters (A-Z and a-z), numbers (0-9), and dashes (-). | `string` | `"host-resource-group"` | no |
 | <a name="input_host_resource_group_prefix"></a> [host\_resource\_group\_prefix](#input\_host\_resource\_group\_prefix) | Prefix used to create ASG Launch template & Host Resource Group license configuration | `string` | `"mac1-"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_host_resource_group_id"></a> [host\_resource\_group\_id](#output\_host\_resource\_group\_id) | To be put into subsequent stack's tfvars |
+| <a name="output_license_manager_arn"></a> [license\_manager\_arn](#output\_license\_manager\_arn) | To be put into subsequent stack's tfvars |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

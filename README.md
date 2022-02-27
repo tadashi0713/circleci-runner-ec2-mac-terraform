@@ -14,6 +14,9 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 | x86 EC2 Mac(`mac1.metal`) | 12CPU | 32GB |
 | M1 EC2 Mac(`mac2.metal`)  | 12CPU | 16GB |
 
+<img src="./docs/compare.png" width="500px">
+Comparison of build speed of Simple iOS UnitTest(Clean build)
+
 * You can customize AMI to install other softwares needed for mobile development(Flutter SDK, etc.)
 * You can customize storage of EC2 Mac instances(AWS EBS)
 * After AWS provide M1 EC2 Mac(`mac2.metal`), this runner also can suppport(WIP, after M1 EC2 Mac become GA)

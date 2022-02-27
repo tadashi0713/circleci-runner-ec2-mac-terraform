@@ -86,3 +86,13 @@ resource "aws_cloudformation_stack" "mac1_host_resource_group" {
 }
 STACK
 }
+
+output "host_resource_group_id" {
+  value       = random_pet.host_resource_group.id
+  description = "To be put into subsequent stack's tfvars"
+}
+
+output "license_manager_arn" {
+  value       = aws_licensemanager_license_configuration.license_config.arn
+  description = "To be put into subsequent stack's tfvars"
+}

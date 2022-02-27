@@ -198,7 +198,6 @@ terraform apply -auto-approve
 | <a name="input_cf_stack_name"></a> [cf\_stack\_name](#input\_cf\_stack\_name) | Dedicated host CloudFormation stack name. It can include letters (A-Z and a-z), numbers (0-9), and dashes (-). | `string` | `"host-resource-group"` | no |
 | <a name="input_host_resource_group_prefix"></a> [host\_resource\_group\_prefix](#input\_host\_resource\_group\_prefix) | Prefix used to create ASG Launch template & Host Resource Group license configuration | `string` | `"mac1-"` | no |
 | <a name="input_mac_ebs_volume_size"></a> [mac\_ebs\_volume\_size](#input\_mac\_ebs\_volume\_size) | EC2 Mac1 EBS volume size | `number` | `200` | no |
-| <a name="input_management_subnet"></a> [management\_subnet](#input\_management\_subnet) | Allow access from management subnet | `list(string)` | `[]` | no |
 | <a name="input_max_num_instances"></a> [max\_num\_instances](#input\_max\_num\_instances) | Max number of EC2 Mac1 instances in ASG | `number` | `3` | no |
 | <a name="input_min_num_instances"></a> [min\_num\_instances](#input\_min\_num\_instances) | Min number of EC2 Mac1 instances in ASG | `number` | `1` | no |
 | <a name="input_number_of_instances"></a> [number\_of\_instances](#input\_number\_of\_instances) | Desired Capacity of EC2 Mac1 instances in ASG | `number` | `2` | no |

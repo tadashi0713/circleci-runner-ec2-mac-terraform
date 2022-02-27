@@ -64,12 +64,6 @@ variable "worker_prefix" {
   default     = "circleci-runner-mac"
 }
 
-variable "management_subnet" {
-  description = "Allow access from management subnet"
-  type        = list(string)
-  default     = []
-}
-
 variable "vpc_id" {
   description = "VPC Id for LB Target Group"
   type        = string

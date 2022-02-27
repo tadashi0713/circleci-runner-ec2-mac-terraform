@@ -15,7 +15,6 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 | M1 EC2 Mac(`mac2.metal`)  | 12CPU | 16GB |
 
 <img src="./docs/compare.png" width="500px">
-Comparison of build speed of Simple iOS UnitTest(Clean build)
 
 * You can customize AMI to install other softwares needed for mobile development(Flutter SDK, etc.)
 * You can customize storage of EC2 Mac instances(AWS EBS)
@@ -28,7 +27,7 @@ Comparison of build speed of Simple iOS UnitTest(Clean build)
 * [Enable SSH debug](https://circleci.com/docs/2.0/runner-overview/#debugging-with-ssh)
 * Support other autoscalling solutions
 * Support M1 EC2 Mac(`mac2.metal`, after M1 EC2 Mac become GA)
-* Use Ansible instead of [install.sh](`./images/install.sh`)
+* Use Ansible instead of [install.sh]("./images/install.sh")
 
 ## Consideration
 

@@ -1,14 +1,19 @@
 version: 2.1
 
-orbs: 
-  terraform: circleci/terraform@3.0.1
+jobs:
+  packer:
+    docker:
+      - image: hashicorp/packer:full-1.7.9
+    steps:
+      - checkout
+      # Ruby Orb(Install fastlane)
+      - run:
+          command: |
+            packer fmt .
+            packer validate .
+          working_directory: images
 
 workflows:
   main:
     jobs:
-      - terraform/fmt:
-          checkout: true
-          tag: 1.1.5
-      - terraform/validate:
-          checkout: true
-          tag: 1.1.5
+      - packer

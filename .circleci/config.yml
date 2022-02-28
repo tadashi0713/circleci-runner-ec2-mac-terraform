@@ -25,6 +25,10 @@ jobs:
           path: terraform-aws-ec2-mac
       - terraform/validate:
           path: terraform-aws-dedicated-hosts
+      - terraform/validate:
+          path: terraform-aws-ec2-mac
+      - terraform/plan:
+          path: terraform-aws-dedicated-hosts
 
 workflows:
   main:

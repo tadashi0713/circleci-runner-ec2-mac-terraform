@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs: 
+  terraform: circleci/terraform@3.0.1
+
 jobs:
   packer:
     docker:
@@ -11,11 +14,17 @@ jobs:
           working_directory: images
 
   terraform:
-    docker:
-      - image: hashicorp/terraform:1.1.6
+    executor:
+      name: terraform/default
+      tag: 1.1.6
     steps:
       - checkout
-      - run: terraform fmt -recursive
+      - terraform/fmt:
+          path: terraform-aws-dedicated-hosts
+      - terraform/fmt:
+          path: terraform-aws-ec2-mac
+      - terraform/validate:
+          path: terraform-aws-dedicated-hosts
 
 workflows:
   main:

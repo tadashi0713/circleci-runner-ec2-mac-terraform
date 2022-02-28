@@ -1,17 +1,5 @@
 # Build custom AMI using Packer
 
-Please also refer to this document provided by AWS.
-
-[Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
-
-In order to build/test iOS app in EC2 Mac instances, you have to install Xcode and other softwares since default AMI does not include them.
-
-Since it takes more than 1 hours to install them(especially Xcode), it's needed to create custom AMIs for EC2 Mac instances.
-
-This time, we will create them with Packer.
-
-<img src="../docs/packer.png" width="500px">
-
 In order to build custom AMI using Packer, you will need EC2 Mac instance with Dedicated Host.
 
 First, in order to determine if a given Region and Availability Zone combination supports the mac1.metal instance type, use the describe-instance-type-offerings command of the AWS CLI.

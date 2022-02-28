@@ -52,7 +52,19 @@ Please install them in your local machine.
 
 ### Build custom AMI using Packer
 
-Please read [this README](./images/README.md).
+Please also refer to this document provided by AWS.
+
+[Building Amazon Machine Images (AMIs) for EC2 Mac instances with Packer](https://aws.amazon.com/jp/blogs/compute/building-amazon-machine-images-amis-for-ec2-mac-instances-with-packer/)
+
+In order to build/test iOS app in EC2 Mac instances, you have to install Xcode and other softwares since default AMI does not include them.
+
+Since it takes more than 1 hours to install them(especially Xcode), it's needed to create custom AMIs for EC2 Mac instances.
+
+This time, we will create them with Packer.
+
+<img src="./docs/packer.png" width="500px">
+
+Please read [this README](./images/README.md) to create custom AMI using Packer.
 
 ### Provision autoscalling EC2 Mac runner using Terraform
 
@@ -62,30 +74,21 @@ Please also refer to this document provided by AWS.
 
 [Official documentation (as of February 2022) states](https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/ec2-mac-instances.md): “You cannot use Mac instances with Amazon EC2 Auto Scaling”.
 
+However, with the help of Licence Manager service and Launch Templates, you can set up EC2 Auto Scaling Group for EC2 Mac and leave the automated instance provisioning to the service.
+
 <img src="./docs/auto_scalling.png" width="500px">
 
 
-`terraform.tfvars`
-
-
-This is sample file of `terraform.tfvars`
-
-```hcl
-aws_region            = "us-east-2"
-aws_availability_zone = "us-east-2b"
-runner_auth_token     = "runner token"
-ami_id              = "ami-hogehoge"
-vpc_id              = "vpc-fugafuga"
-subnet_ids          = ["subnet-hoge"]
+```sh
+terraform -chdir=terraform-aws-dedicated-hosts init
+terraform -chdir=terraform-aws-dedicated-hosts plan
+terraform -chdir=terraform-aws-dedicated-hosts apply -auto-approve
 ```
 
-`runner_auth_token` is 
-`ami_id` is custom AMI ID which is created in previous step with Packer.
-
-```
-terraform init
-terraform plan
-terraform apply -auto-approve
+```sh
+terraform -chdir=terraform-aws-ec2-mac init
+terraform -chdir=terraform-aws-ec2-mac plan
+terraform -chdir=terraform-aws-ec2-mac apply -auto-approve
 ```
 
 ### Cleaning up

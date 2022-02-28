@@ -27,9 +27,6 @@ jobs:
           path: terraform-aws-dedicated-hosts
       - terraform/validate:
           path: terraform-aws-ec2-mac
-      - terraform/plan:
-          path: terraform-aws-dedicated-hosts
-          var: $TERRAFORM_VARS_AWS_DEDICATED_HOSTS
 
 workflows:
   main:

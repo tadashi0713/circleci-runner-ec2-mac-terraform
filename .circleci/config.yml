@@ -10,7 +10,15 @@ jobs:
           command: packer fmt .
           working_directory: images
 
+  terraform:
+    docker:
+      - image: hashicorp/terraform:1.1.6
+    steps:
+      - checkout
+      - run: terraform fmt -recursive
+
 workflows:
   main:
     jobs:
       - packer
+      - terraform

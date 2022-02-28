@@ -34,6 +34,7 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 * EC2 Mac instances are available only as bare metal instances on Dedicated Hosts, with a minimum allocation period of 24 hours before you can release the Dedicated Host.
 * Please take special note of the [costs](https://aws.amazon.com/ec2/dedicated-hosts/pricing/) of running EC2 Mac Dedicated hosts for 24 hours
 * For EC2 Mac instances, there is a one-to-one mapping between the Dedicated Host and the instance running on this host. This means you are not able to slice a Dedicated Host into multiple instances like you would for Linux and Windows machines.
+* To deploy this solution, a Service Quota Increase must be submitted for Dedicated Hosts, as the default quota is 0. Deploying the solution without this increase will result in failures when provisioning the Dedicated Hosts for the mac1.metal instances.
 * For more information about EC2 Mac instances, please refer to [this document](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-mac-instances.html#mac-instance-considerations).
 
 ## Getting Started
@@ -59,16 +60,17 @@ Please also refer to this document provided by AWS.
 
 [Implementing Auto Scaling for EC2 Mac Instances](https://aws.amazon.com/jp/blogs/compute/implementing-autoscaling-for-ec2-mac-instances/)
 
+[Official documentation (as of February 2022) states](https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/ec2-mac-instances.md): “You cannot use Mac instances with Amazon EC2 Auto Scaling”.
+
 <img src="./docs/auto_scalling.png" width="500px">
 
-Before
 
 `terraform.tfvars`
 
 
 This is sample file of `terraform.tfvars`
 
-```
+```hcl
 aws_region            = "us-east-2"
 aws_availability_zone = "us-east-2b"
 runner_auth_token     = "runner token"

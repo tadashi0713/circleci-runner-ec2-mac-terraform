@@ -42,6 +42,15 @@ We use this Dedicated Host to create the AMI via Packer.
 
 There are variables to install Xcode, you will need to pass required [variables](./images/variables.pkr.hcl)
 
+This is sample file of `variables.auto.pkvars.hcl`
+
+```hcl
+aws_region             = "us-east-2"
+subnet_id              = "subnet-hoge"
+xcode_install_email    = "sample@email.com"
+xcode_install_password = "password"
+```
+
 `xcode_install_email` and `xcode_install_password` are email/password of Apple Developer Program Account.
 
 Since Apple Developer Program only allows 2 factor authentication, you cannot authenticate only with email/password.

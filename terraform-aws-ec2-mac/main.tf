@@ -265,12 +265,26 @@ resource "aws_autoscaling_group" "mac_workers" {
   }
 }
 
-# AWS ALB ASG Attachment (alternative is inline ASG resource)
-# Ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_attachment
-#resource "aws_autoscaling_attachment" "mac_workers" {
-#  autoscaling_group_name = aws_autoscaling_group.mac_workers.id
-#  alb_target_group_arn   = aws_lb_target_group.app_tg.arn
-#}
+# ASG schedule(cron)
+resource "aws_autoscaling_schedule" "scale_up" {
+  scheduled_action_name  = "scale_up"
+  min_size               = var.min_num_instances_scale
+  max_size               = var.max_num_instances_scale
+  desired_capacity       = var.max_num_instances_scale
+  recurrence             = var.scale_up_cron
+  time_zone              = var.autoscaling_schedule_time_zone
+  autoscaling_group_name = aws_autoscaling_group.mac_workers.name
+}
+
+resource "aws_autoscaling_schedule" "scale_down" {
+  scheduled_action_name  = "scale_down"
+  min_size               = var.min_num_instances
+  max_size               = var.max_num_instances
+  desired_capacity       = var.number_of_instances
+  recurrence             = var.scale_down_cron
+  time_zone              = var.autoscaling_schedule_time_zone
+  autoscaling_group_name = aws_autoscaling_group.mac_workers.name
+}
 
 resource "aws_security_group" "apple_remote_desktop" {
   name        = "sg_apple_remote_desktop"

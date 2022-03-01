@@ -41,7 +41,7 @@ variable "license_manager_arn" {
 variable "number_of_instances" {
   description = "Desired Capacity of EC2 Mac1 instances in ASG"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "min_num_instances" {
@@ -53,7 +53,43 @@ variable "min_num_instances" {
 variable "max_num_instances" {
   description = "Max number of EC2 Mac1 instances in ASG"
   type        = number
+  default     = 2
+}
+
+variable "number_of_instances_scale" {
+  description = "Desired Capacity of EC2 Mac1 instances in ASG when scalling"
+  type        = number
+  default     = 2
+}
+
+variable "min_num_instances_scale" {
+  description = "Min number of EC2 Mac1 instances in ASG when scalling"
+  type        = number
+  default     = 2
+}
+
+variable "max_num_instances_scale" {
+  description = "Max number of EC2 Mac1 instances in ASG when scalling"
+  type        = number
   default     = 3
+}
+
+variable "scale_up_cron" {
+  description = "Unix cron syntax format of when to scale up"
+  type        = string
+  default     = "0 8 * * MON-FRI"
+}
+
+variable "scale_down_cron" {
+  description = "Unix cron syntax format of when to scale down"
+  type        = string
+  default     = "0 20 * * *"
+}
+
+variable "autoscaling_schedule_time_zone" {
+  description = "Time Zone of Autoscalling Schedule"
+  type        = string
+  default     = "UTC"
 }
 
 variable "worker_prefix" {

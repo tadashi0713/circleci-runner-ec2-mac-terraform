@@ -11,6 +11,8 @@
 | Name | Type |
 |------|------|
 | [aws_autoscaling_group.mac_workers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
+| [aws_autoscaling_schedule.scale_down](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
+| [aws_autoscaling_schedule.scale_up](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
 | [aws_iam_instance_profile.ssm_inst_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
 | [aws_iam_role.ec2_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.ssm_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
@@ -34,10 +36,16 @@
 | <a name="input_host_resource_group_cfn_stack_name"></a> [host\_resource\_group\_cfn\_stack\_name](#input\_host\_resource\_group\_cfn\_stack\_name) | Host Resource Group CFN Stack Created | `string` | n/a | yes |
 | <a name="input_license_manager_arn"></a> [license\_manager\_arn](#input\_license\_manager\_arn) | The ARN of the License Configuration named MyDefaultLicense | `string` | n/a | yes |
 | <a name="input_runner_auth_token"></a> [runner\_auth\_token](#input\_runner\_auth\_token) | Runner auth token.  See docs for how to generate one. https://circleci.com/docs/2.0/runner-installation/#authentication | `string` | n/a | yes |
+| <a name="input_autoscaling_schedule_time_zone"></a> [autoscaling\_schedule\_time\_zone](#input\_autoscaling\_schedule\_time\_zone) | Time Zone of Autoscalling Schedule | `string` | `"UTC"` | no |
 | <a name="input_mac_ebs_volume_size"></a> [mac\_ebs\_volume\_size](#input\_mac\_ebs\_volume\_size) | EC2 Mac1 EBS volume size | `number` | `200` | no |
-| <a name="input_max_num_instances"></a> [max\_num\_instances](#input\_max\_num\_instances) | Max number of EC2 Mac1 instances in ASG | `number` | `3` | no |
+| <a name="input_max_num_instances"></a> [max\_num\_instances](#input\_max\_num\_instances) | Max number of EC2 Mac1 instances in ASG | `number` | `2` | no |
+| <a name="input_max_num_instances_scale"></a> [max\_num\_instances\_scale](#input\_max\_num\_instances\_scale) | Max number of EC2 Mac1 instances in ASG when scalling | `number` | `3` | no |
 | <a name="input_min_num_instances"></a> [min\_num\_instances](#input\_min\_num\_instances) | Min number of EC2 Mac1 instances in ASG | `number` | `1` | no |
-| <a name="input_number_of_instances"></a> [number\_of\_instances](#input\_number\_of\_instances) | Desired Capacity of EC2 Mac1 instances in ASG | `number` | `2` | no |
+| <a name="input_min_num_instances_scale"></a> [min\_num\_instances\_scale](#input\_min\_num\_instances\_scale) | Min number of EC2 Mac1 instances in ASG when scalling | `number` | `2` | no |
+| <a name="input_number_of_instances"></a> [number\_of\_instances](#input\_number\_of\_instances) | Desired Capacity of EC2 Mac1 instances in ASG | `number` | `1` | no |
+| <a name="input_number_of_instances_scale"></a> [number\_of\_instances\_scale](#input\_number\_of\_instances\_scale) | Desired Capacity of EC2 Mac1 instances in ASG when scalling | `number` | `2` | no |
+| <a name="input_scale_down_cron"></a> [scale\_down\_cron](#input\_scale\_down\_cron) | Unix cron syntax format of when to scale down | `string` | `"0 20 * * *"` | no |
+| <a name="input_scale_up_cron"></a> [scale\_up\_cron](#input\_scale\_up\_cron) | Unix cron syntax format of when to scale up | `string` | `"0 8 * * MON-FRI"` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | Security Group Ids used by EC2 Mac1 instances in ASG | `list(string)` | `[]` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | Subnet Id for each Availability Zone in ASG | `list(string)` | `[]` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC Id for LB Target Group | `string` | `""` | no |

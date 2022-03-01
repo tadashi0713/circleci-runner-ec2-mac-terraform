@@ -78,12 +78,17 @@ However, with the help of Licence Manager service and Launch Templates, you can 
 
 <img src="./docs/auto_scalling.png" width="500px">
 
+First, 
 
 ```sh
 terraform -chdir=terraform-aws-dedicated-hosts init
 terraform -chdir=terraform-aws-dedicated-hosts plan
 terraform -chdir=terraform-aws-dedicated-hosts apply -auto-approve
 ```
+
+For more info about terraform-aws-dedicated-hosts, 
+
+Deploy mac1.metal Auto Scaling Group
 
 ```sh
 terraform -chdir=terraform-aws-ec2-mac init

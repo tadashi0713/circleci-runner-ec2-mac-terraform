@@ -7,7 +7,6 @@ Terraform / Paxcker template to deploy autoscaling CircleCI Runner of [EC2 Mac i
 ## Features
 
 * Better at performance than resource classes which CircleCI Cloud supports(if runners are already provisioned).
-* Support EC2 Auto Scalling Group(Currently support cron schedule, since it takes time to provision / cost)
 
 | Resource Class            | CPU   | RAM  |
 | ------------------------- | ----- | ---- |
@@ -18,6 +17,7 @@ Terraform / Paxcker template to deploy autoscaling CircleCI Runner of [EC2 Mac i
 
 <img src="./docs/compare.png" width="500px">
 
+* Support EC2 Auto Scalling Group(Currently support cron schedule, since it takes time to provision / cost)
 * You can build and test iOS app in your private AWS VPC, AWS Region
 * You can customize AMI to install other softwares needed for mobile development using Packer(Flutter SDK, etc.)
 * You can customize storage of EC2 Mac instances(AWS EBS)

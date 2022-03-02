@@ -80,7 +80,13 @@ However, with the help of Licence Manager service and Launch Templates, you can 
 
 <img src="./docs/auto_scalling.png" width="500px">
 
-First, 
+First, we will deploy Dedicated Hosts infrastructure.
+
+Before deploy this, we will do one-time setup for AWS License Manager to have the required IAM Permissions through the AWS Management Console. If you have already used License Manager, this has already been done for you. Click on “create customer managed license”, check the box, and then click on “Grant Permissions.”
+
+<img src="./docs/Pic-2-1-1024x458.png">
+
+Next, we will deploy Dedicated Hosts infrastructure via Terraform.
 
 ```sh
 terraform -chdir=terraform-aws-dedicated-hosts init
@@ -88,14 +94,79 @@ terraform -chdir=terraform-aws-dedicated-hosts plan
 terraform -chdir=terraform-aws-dedicated-hosts apply -auto-approve
 ```
 
-For more info about terraform-aws-dedicated-hosts, 
+For more info about this module(variables), please read [this README](./terraform-aws-dedicated-hosts/README.md).
 
-Deploy mac1.metal Auto Scaling Group
+After `terraform apply` completes, you will get these outputs, and we will use them in next step.
+
+```
+Outputs:
+
+host_resource_group_id = "hogehoge"
+license_manager_arn = "arn:aws:license-manager:fugafuga"
+```
+
+<br />
+
+Next, we will deploy EC2 Mac Auto Scaling Group.
+
+This is sample `terraform.tfvars`
+
+```tfvars
+aws_region                         = "us-east-2"
+aws_availability_zone              = "us-east-2b"
+host_resource_group_cfn_stack_name = "hoge-host-resource-group"
+license_manager_arn                = "arn:aws:license-manager:us-east-2:fuga"
+runner_auth_token                  = "runner token"
+ami_id                             = "ami-custom-ami"
+vpc_id                             = "vpc-hoge"
+subnet_ids                         = ["subnet-hoge", "subnet-fuga"]
+max_num_instances                  = 3
+min_num_instances                  = 1
+number_of_instances                = 2
+number_of_instances_scale          = 3
+scale_up_cron                      = "0 8 * * MON-FRI"
+scale_down_cron                    = "0 20 * * *"
+```
+
+`license_manager_arn` and `host_resource_group_cfn_stack_name` are outputs of previous step.
+
+In order to create `runner_auth_token`, please refer to [this doc](https://circleci.com/docs/2.0/runner-installation/#authentication).
+
+`ami_id` is custom AMI ID which is created [via Packer](./images/README.md).
+
+For more info about this module(variables), please read [this README](./terraform-aws-ec2-mac/README.md).
 
 ```sh
 terraform -chdir=terraform-aws-ec2-mac init
 terraform -chdir=terraform-aws-ec2-mac plan
 terraform -chdir=terraform-aws-ec2-mac apply -auto-approve
+```
+
+You can get info about runner status via `circleci runner instance list my-namespace/my-resource-class`.
+
+### Build/Test iOS app
+
+This is sample `.circleci/config.yml` of iOS app using Fastlane.
+
+```yaml
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.4.0
+
+jobs:
+  unit_test:
+    machine: true
+    resource_class: my-namespace/my-resource-class
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run: bundle exec fastlane unit_test
+
+workflows:
+  main:
+    jobs:
+      - unit_test
 ```
 
 ### Cleaning up

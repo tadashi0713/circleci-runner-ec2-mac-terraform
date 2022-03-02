@@ -1,3 +1,5 @@
+# terraform-aws-ec2-mac
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
 

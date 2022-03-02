@@ -33,10 +33,18 @@ There are variables to install Xcode, you will need to pass required [variables]
 This is sample file of `variables.auto.pkvars.hcl`
 
 ```hcl
+# required
 aws_region             = "us-east-2"
 subnet_id              = "subnet-hoge"
 xcode_install_email    = "sample@email.com"
 xcode_install_password = "password"
+# optional
+ami_prefix             = "custom-ami-prefix"
+root_volume_size_gb    = 200
+macos_version          = "12.2"
+xcode_version          = "13.2.1"
+ruby_version           = "3.1.1"
+bundler_version        = "2.3.8"
 ```
 
 `xcode_install_email` and `xcode_install_password` are email/password of Apple Developer Program Account.

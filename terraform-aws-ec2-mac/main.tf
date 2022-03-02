@@ -117,7 +117,7 @@ resource "aws_launch_template" "mac_workers" {
   #leverage Variables to list security groups
   #vpc_security_group_ids = slice(var.security_group_ids, 0, length(var.security_group_ids)) # Security Group IDs for ASG in non-default vpc
   #use terraform code to create security groups
-  vpc_security_group_ids = [aws_security_group.apple_remote_desktop.id]
+  vpc_security_group_ids = [aws_security_group.circleci_runner.id]
 
   # module.web_server_sg.security_group_id
   #vpc_security_group_ids = slice(module.web_server_sg.security_group_id, 0, length(module.web_server_sg.security_group_id))
@@ -268,9 +268,9 @@ resource "aws_autoscaling_group" "mac_workers" {
 # ASG schedule(cron)
 resource "aws_autoscaling_schedule" "scale_up" {
   scheduled_action_name  = "scale_up"
-  min_size               = var.min_num_instances_scale
-  max_size               = var.max_num_instances_scale
-  desired_capacity       = var.max_num_instances_scale
+  min_size               = var.min_num_instances
+  max_size               = var.max_num_instances
+  desired_capacity       = var.number_of_instances_scale
   recurrence             = var.scale_up_cron
   time_zone              = var.autoscaling_schedule_time_zone
   autoscaling_group_name = aws_autoscaling_group.mac_workers.name
@@ -286,9 +286,9 @@ resource "aws_autoscaling_schedule" "scale_down" {
   autoscaling_group_name = aws_autoscaling_group.mac_workers.name
 }
 
-resource "aws_security_group" "apple_remote_desktop" {
-  name        = "sg_apple_remote_desktop"
-  description = "Allow Apple Desktop Traffic"
+resource "aws_security_group" "circleci_runner" {
+  name        = "sg_circleci_runner"
+  description = "Security Group for CircleCI Runner"
   vpc_id      = var.vpc_id
 
   egress {
@@ -306,6 +306,6 @@ resource "aws_security_group" "apple_remote_desktop" {
   }
 
   tags = {
-    Name = "remote desktop connection"
+    Name = "Security Group for CircleCI Runner"
   }
 }

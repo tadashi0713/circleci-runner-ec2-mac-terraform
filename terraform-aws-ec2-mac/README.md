@@ -20,7 +20,7 @@
 | [aws_iam_role_policy_attachment.ssm_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_launch_template.mac_workers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
 | [aws_licensemanager_license_configuration.mac_workers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/licensemanager_license_configuration) | resource |
-| [aws_security_group.apple_remote_desktop](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group.circleci_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_ssm_activation.ssm_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_activation) | resource |
 | [random_pet.mac_workers](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [random_string.str_prefix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
@@ -39,9 +39,7 @@
 | <a name="input_autoscaling_schedule_time_zone"></a> [autoscaling\_schedule\_time\_zone](#input\_autoscaling\_schedule\_time\_zone) | Time Zone of Autoscalling Schedule | `string` | `"UTC"` | no |
 | <a name="input_mac_ebs_volume_size"></a> [mac\_ebs\_volume\_size](#input\_mac\_ebs\_volume\_size) | EC2 Mac1 EBS volume size | `number` | `200` | no |
 | <a name="input_max_num_instances"></a> [max\_num\_instances](#input\_max\_num\_instances) | Max number of EC2 Mac1 instances in ASG | `number` | `2` | no |
-| <a name="input_max_num_instances_scale"></a> [max\_num\_instances\_scale](#input\_max\_num\_instances\_scale) | Max number of EC2 Mac1 instances in ASG when scalling | `number` | `3` | no |
 | <a name="input_min_num_instances"></a> [min\_num\_instances](#input\_min\_num\_instances) | Min number of EC2 Mac1 instances in ASG | `number` | `1` | no |
-| <a name="input_min_num_instances_scale"></a> [min\_num\_instances\_scale](#input\_min\_num\_instances\_scale) | Min number of EC2 Mac1 instances in ASG when scalling | `number` | `2` | no |
 | <a name="input_number_of_instances"></a> [number\_of\_instances](#input\_number\_of\_instances) | Desired Capacity of EC2 Mac1 instances in ASG | `number` | `1` | no |
 | <a name="input_number_of_instances_scale"></a> [number\_of\_instances\_scale](#input\_number\_of\_instances\_scale) | Desired Capacity of EC2 Mac1 instances in ASG when scalling | `number` | `2` | no |
 | <a name="input_scale_down_cron"></a> [scale\_down\_cron](#input\_scale\_down\_cron) | Unix cron syntax format of when to scale down | `string` | `"0 20 * * *"` | no |

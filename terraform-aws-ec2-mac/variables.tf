@@ -62,18 +62,6 @@ variable "number_of_instances_scale" {
   default     = 2
 }
 
-variable "min_num_instances_scale" {
-  description = "Min number of EC2 Mac1 instances in ASG when scalling"
-  type        = number
-  default     = 2
-}
-
-variable "max_num_instances_scale" {
-  description = "Max number of EC2 Mac1 instances in ASG when scalling"
-  type        = number
-  default     = 3
-}
-
 variable "scale_up_cron" {
   description = "Unix cron syntax format of when to scale up"
   type        = string

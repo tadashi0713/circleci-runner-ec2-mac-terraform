@@ -1,11 +1,13 @@
 # CircleCI Runner EC2 Mac Terraform
 
-Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac instances.
+Terraform / Paxcker template to deploy autoscaling CircleCI Runner of [EC2 Mac instances](https://aws.amazon.com/ec2/instance-types/mac/).
+
+<img src="./docs/architecture.png">
 
 ## Features
 
-* You can build and test iOS app in your private AWS VPC, AWS Region
 * Better at performance than resource classes which CircleCI Cloud supports(if runners are already provisioned).
+* Support EC2 Auto Scalling Group(Currently support cron schedule, since it takes time to provision / cost)
 
 | Resource Class            | CPU   | RAM  |
 | ------------------------- | ----- | ---- |
@@ -16,14 +18,14 @@ Terraform plan(and Packer) to deploy autoscaling CircleCI Runner of EC2 Mac inst
 
 <img src="./docs/compare.png" width="500px">
 
+* You can build and test iOS app in your private AWS VPC, AWS Region
 * You can customize AMI to install other softwares needed for mobile development using Packer(Flutter SDK, etc.)
 * You can customize storage of EC2 Mac instances(AWS EBS)
 * After AWS provide M1 EC2 Mac(`mac2.metal`), this runner also can suppport(WIP, after M1 EC2 Mac become GA)
-* Can support [CircleCI Server](https://circleci.com/docs/2.0/server-3-overview/)(WIP)
+* Support [CircleCI Server](https://circleci.com/docs/2.0/server-3-overview/)
 
 ## Work in progress
 
-* Customize for [CircleCI Server](https://circleci.com/docs/2.0/server-3-overview/)
 * [Enable SSH debug](https://circleci.com/docs/2.0/runner-overview/#debugging-with-ssh)
 * Support other autoscalling solutions
 * Support M1 EC2 Mac(`mac2.metal`, after M1 EC2 Mac become GA)
